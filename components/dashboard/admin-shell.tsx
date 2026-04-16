@@ -89,6 +89,9 @@ function pageMeta(pathname: string | null): { title: string; subtitle: string } 
   if (pathname?.startsWith("/active-requests")) {
     return { title: "Active Requests", subtitle: `${subtitleDate} · The Grand Meridian` };
   }
+  if (pathname?.startsWith("/rooms")) {
+    return { title: "Room management", subtitle: `${subtitleDate} · The Grand Meridian` };
+  }
   return { title: "Dashboard", subtitle: `${subtitleDate} · The Grand Meridian` };
 }
 
@@ -145,12 +148,12 @@ export function AdminShell({ children }: { children: ReactNode }) {
               </span>
               Active Requests
             </Link>
-            <div className="nav-item nav-item-muted">
+            <Link href="/rooms" className={`nav-item${pathname === "/rooms" ? " active" : ""}`}>
               <span className="nav-icon">
                 <IconHome />
               </span>
               Room Management
-            </div>
+            </Link>
             <div className="nav-item nav-item-muted">
               <span className="nav-icon">
                 <IconMenu />
