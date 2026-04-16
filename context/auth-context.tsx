@@ -10,7 +10,13 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { createAuthenticatedRequest, getCurrentAdmin, loginAdmin, logoutAdmin } from "@/lib/auth/api";
+import {
+  createAuthenticatedRequest,
+  getCurrentAdmin,
+  loginAdmin,
+  logoutAdmin,
+  type AuthFetchOptions,
+} from "@/lib/auth/api";
 import { clearRefreshToken, getRefreshToken, setRefreshToken } from "@/lib/auth/storage";
 import type { AdminUser } from "@/lib/auth/types";
 
@@ -22,6 +28,7 @@ type AuthContextValue = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshCurrentUser: () => Promise<void>;
+  request: <T>(path: string, init?: AuthFetchOptions) => Promise<T>;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -112,8 +119,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login,
       logout,
       refreshCurrentUser,
+      request: authenticatedRequest,
     }),
-    [accessToken, admin, isInitializing, login, logout, refreshCurrentUser]
+    [accessToken, admin, isInitializing, login, logout, refreshCurrentUser, authenticatedRequest]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

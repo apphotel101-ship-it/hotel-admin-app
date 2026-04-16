@@ -13,7 +13,7 @@ export default function Home() {
       return;
     }
 
-    router.replace(isAuthenticated ? "/dashboard" : "/login");
+    router.replace(isAuthenticated ? "/open-requests" : "/login");
   }, [isAuthenticated, isInitializing, router]);
 
   return <div className="auth-screen-loader">Loading...</div>;

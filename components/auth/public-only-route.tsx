@@ -11,7 +11,7 @@ export function PublicOnlyRoute({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isInitializing && isAuthenticated) {
-      router.replace("/dashboard");
+      router.replace("/open-requests");
     }
   }, [isAuthenticated, isInitializing, router]);
 

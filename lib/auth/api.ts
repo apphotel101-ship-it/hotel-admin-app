@@ -16,7 +16,7 @@ export class ApiError extends Error {
   }
 }
 
-type AuthFetchOptions = RequestInit & {
+export type AuthFetchOptions = RequestInit & {
   skipAuthRetry?: boolean;
 };
 

@@ -57,7 +57,7 @@ export default function LoginPage() {
     try {
       setIsSubmitting(true);
       await login(values.email.trim(), values.password);
-      router.replace("/dashboard");
+      router.replace("/open-requests");
     } catch (error) {
       if (error instanceof ApiError) {
         setErrors({ form: error.message || "Invalid credentials. Please try again." });
