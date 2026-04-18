@@ -976,3 +976,424 @@ select.form-input { cursor: pointer; }
   font-size: 11px;
   color: var(--text2);
 }
+
+.room-card--clickable {
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.room-card--clickable:hover {
+  box-shadow: 0 6px 20px rgba(44, 31, 14, 0.12);
+}
+
+.room-card--clickable:focus-visible {
+  outline: 2px solid var(--gold2);
+  outline-offset: 2px;
+}
+
+/* Room guest details modal */
+.room-guest-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(44, 31, 14, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.room-guest-modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: min(92vh, 720px);
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 56px rgba(44, 31, 14, 0.22);
+}
+
+.room-guest-modal-header {
+  padding: 18px 18px 14px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.room-guest-modal-header--occupied {
+  background: linear-gradient(165deg, #d45656 0%, #b42318 55%, #9a1e14 100%);
+}
+
+.room-guest-modal-header--available {
+  background: linear-gradient(165deg, #5aad8c 0%, #2d6a4f 55%, #245a42 100%);
+}
+
+.room-guest-modal-header--reserved {
+  background: linear-gradient(165deg, #e0a855 0%, #a65f14 55%, #8a4e10 100%);
+}
+
+.room-guest-modal-header--other {
+  background: linear-gradient(165deg, #8a8278 0%, #5c564e 100%);
+}
+
+.room-guest-modal-header-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.room-guest-modal-header-text {
+  min-width: 0;
+}
+
+.room-guest-modal-floor-line {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.92;
+  margin-bottom: 4px;
+}
+
+.room-guest-modal-room-num {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.room-guest-modal-room-sub {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.95;
+  margin-top: 6px;
+}
+
+.room-guest-modal-header-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.room-guest-modal-btn-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Jost", sans-serif;
+  cursor: pointer;
+}
+
+.room-guest-modal-btn-edit:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.room-guest-modal-btn-edit--active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #8b1f1f;
+  border-color: rgba(255, 255, 255, 0.95);
+}
+
+.room-guest-modal-btn-edit--active svg {
+  color: #8b1f1f;
+}
+
+.room-guest-modal-btn-edit:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.room-guest-modal-btn-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.08);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.room-guest-modal-btn-close:hover {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.room-guest-modal-header-row2 {
+  margin-top: 12px;
+}
+
+.room-guest-modal-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.15);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.room-guest-modal-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.room-guest-modal-status-chev {
+  font-size: 9px;
+  opacity: 0.85;
+  margin-left: 2px;
+}
+
+.room-guest-modal-body {
+  padding: 18px 20px 20px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.room-guest-modal-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.room-guest-modal-banner-icon {
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.room-guest-modal-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.room-guest-modal-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fde8e8;
+  border: 1px solid #f5c4c4;
+  color: #8b1f1f;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.room-guest-modal-profile-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.room-guest-modal-profile-id {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+.room-guest-modal-readonly-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+
+.room-guest-modal-readonly-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.room-guest-modal-readonly-field--full {
+  grid-column: 1 / -1;
+}
+
+.room-guest-modal-readonly-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.room-guest-modal-readonly-val {
+  font-size: 14px;
+  color: var(--text);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.room-guest-modal-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+
+.room-guest-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.room-guest-modal-field--full {
+  grid-column: 1 / -1;
+}
+
+.room-guest-modal-field-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.room-guest-modal-input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Jost", sans-serif;
+  color: var(--text);
+  background: var(--card);
+}
+
+.room-guest-modal-input:focus {
+  outline: none;
+  border-color: var(--gold2);
+  box-shadow: 0 0 0 2px rgba(196, 169, 90, 0.25);
+}
+
+.room-guest-modal-textarea {
+  resize: vertical;
+  min-height: 44px;
+}
+
+.room-guest-modal-error {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #b42318;
+}
+
+.room-guest-modal-footer {
+  margin-top: 22px;
+  padding-top: 4px;
+}
+
+.room-guest-modal-footer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.room-guest-modal-footer-row--end {
+  justify-content: flex-end;
+}
+
+.room-guest-modal-footer-row--split {
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.room-guest-modal-footer-actions-right {
+  display: flex;
+  gap: 10px;
+}
+
+.room-guest-modal-btn-checkout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg, #c94c4c 0%, #b42318 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Jost", sans-serif;
+  cursor: pointer;
+}
+
+.room-guest-modal-btn-checkout:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.room-guest-modal-btn-checkout:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.room-guest-modal-btn-checkout--full {
+  width: 100%;
+  justify-content: center;
+}
+
+.room-guest-modal-btn-secondary {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: "Jost", sans-serif;
+  cursor: pointer;
+}
+
+.room-guest-modal-btn-secondary:hover:not(:disabled) {
+  background: var(--surface2);
+}
+
+.room-guest-modal-btn-primary-dark {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: var(--text);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Jost", sans-serif;
+  cursor: pointer;
+}
+
+.room-guest-modal-btn-primary-dark:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.room-guest-modal-btn-secondary:disabled,
+.room-guest-modal-btn-primary-dark:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

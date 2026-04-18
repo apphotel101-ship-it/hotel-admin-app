@@ -1,9 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { RoomGuestModal } from "@/components/dashboard/room-guest-modal";
 import { ApiError } from "@/lib/auth/api";
 import { useAuth } from "@/context/auth-context";
 import { fetchAdminRooms } from "@/lib/rooms/api";
+import { guestInitials } from "@/lib/rooms/guest-utils";
 import { groupRoomsByFloorAndType, sectionTitle } from "@/lib/rooms/group-rooms";
 import type { AdminRoom } from "@/lib/rooms/types";
 
@@ -22,15 +24,12 @@ function roomTypeBadgeClass(roomType: string): string {
   return "room-type-badge room-type-badge--default";
 }
 
-function guestInitialsPlaceholder(): string {
-  return "G";
-}
-
 export default function RoomsPage() {
   const { request } = useAuth();
   const [rooms, setRooms] = useState<AdminRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [modalRoom, setModalRoom] = useState<AdminRoom | null>(null);
 
   const load = useCallback(async () => {
     setError(null);
@@ -112,8 +111,25 @@ export default function RoomsPage() {
                   const isAvailable = variant === "available";
                   const isReserved = variant === "reserved";
 
+                  function openRoomCard() {
+                    setModalRoom(room);
+                  }
+
                   return (
-                    <article key={room.id} className="room-card">
+                    <article
+                      key={room.id}
+                      className="room-card room-card--clickable"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Room ${room.roomNumber}, ${room.status}. Open details.`}
+                      onClick={openRoomCard}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          openRoomCard();
+                        }
+                      }}
+                    >
                       <div className={headerClass}>
                         <div className="room-card-type-caps">{room.roomType.toUpperCase()}</div>
                         <div className="room-card-number">{room.roomNumber}</div>
@@ -124,28 +140,32 @@ export default function RoomsPage() {
                       <div className="room-card-body">
                         {isAvailable ? (
                           <p className="room-card-available-msg">Ready for check-in</p>
-                        ) : (
+                        ) : room.guestDetails ? (
                           <div className="room-card-guest">
                             <div className="room-card-guest-left">
                               <div className="room-card-avatar" aria-hidden>
-                                {guestInitialsPlaceholder()}
+                                {guestInitials(room.guestDetails.guest_name)}
                               </div>
                               <div className="room-card-guest-text">
                                 <div className="room-card-guest-name">Guest</div>
-                                <div className="room-card-guest-label">{isReserved ? "Incoming" : "Guest"}</div>
+                                <div className="room-card-guest-label">{room.guestDetails.guest_name}</div>
                               </div>
                             </div>
                             <div className="room-card-dates">
                               <div className="room-card-date-block">
                                 <span className="room-card-date-label">In</span>
-                                <span className="room-card-date-val">—</span>
+                                <span className="room-card-date-val">{room.guestDetails.check_in}</span>
                               </div>
                               <div className="room-card-date-block">
                                 <span className="room-card-date-label">Out</span>
-                                <span className="room-card-date-val">—</span>
+                                <span className="room-card-date-val">{room.guestDetails.check_out}</span>
                               </div>
                             </div>
                           </div>
+                        ) : (
+                          <p className="room-card-available-msg">
+                            {isReserved ? "No incoming guest on file." : "No active guest."}
+                          </p>
                         )}
                       </div>
                     </article>
@@ -156,6 +176,13 @@ export default function RoomsPage() {
           ))}
         </div>
       )}
+
+      <RoomGuestModal
+        room={modalRoom}
+        onClose={() => setModalRoom(null)}
+        onSuccess={() => void load()}
+        request={request}
+      />
     </div>
   );
 }
